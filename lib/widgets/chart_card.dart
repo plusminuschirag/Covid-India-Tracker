@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
+
 import '../models/covid_day.dart';
 
 class ChartCard extends StatefulWidget {
   final List<CovidDay> covidDayList;
 
-  ChartCard(this.covidDayList) {
-    covidDayList.forEach((element) {
-      print("Printing covidDayList");
-      print("${element.date} : ${element.totalDeaths}");
-    });
-  }
+  ChartCard(this.covidDayList);
 
   @override
   _ChartCardState createState() => _ChartCardState();
@@ -41,25 +38,26 @@ class _ChartCardState extends State<ChartCard> {
             margin: EdgeInsets.all(20),
             elevation: 5,
             child: SizedBox(
-              height: 350,
-              width: 350,
-              child: Center(
-                  child: Container(
-                child: SfCartesianChart(
-                  primaryXAxis: CategoryAxis(),
-                  primaryYAxis: NumericAxis(),
-                  series: <ChartSeries>[
-                    LineSeries<CovidDay, String>(
-                      dataSource: widget.covidDayList,
-                      xValueMapper: (CovidDay covidDay, _) =>
-                          covidDay.date.toString(),
-                      yValueMapper: (CovidDay covidDay, _) =>
-                          covidDay.totalCases,
-                    ),
-                  ],
-                ),
-              )),
-            ),
+                height: 350,
+                width: 350,
+                child: SafeArea(
+                  child: SfCartesianChart(
+                    margin: EdgeInsets.all(10),
+                    tooltipBehavior:
+                        TooltipBehavior(enable: true, header: "India"),
+                    primaryXAxis: CategoryAxis(),
+                    primaryYAxis: NumericAxis(),
+                    series: <ChartSeries>[
+                      LineSeries<CovidDay, String>(
+                        dataSource: widget.covidDayList,
+                        xValueMapper: (CovidDay covidDay, _) =>
+                            DateFormat.yMMMd().format(covidDay.date).toString(),
+                        yValueMapper: (CovidDay covidDay, _) =>
+                            covidDay.totalCases,
+                      ),
+                    ],
+                  ),
+                )),
           ),
         ],
       ),

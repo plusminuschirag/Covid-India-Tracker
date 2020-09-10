@@ -44,11 +44,13 @@ class _MyHomePageState extends State<MyHomePage> {
     List<dynamic> covidNationalData = json.decode(jsonString);
 
     covidNationalData.forEach((element) {
-      covidDailyCases.add(CovidDay(
-        DateTime.parse(element['date']),
-        element['total'],
-        element['deaths'],
-      ));
+      setState(() {
+        covidDailyCases.add(CovidDay(
+          DateTime.parse(element['date']),
+          element['total'],
+          element['deaths'],
+        ));
+      });
     });
   }
 
