@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:intl/intl.dart';
 
 import './widgets/chart_card.dart';
+import './models/covid_day.dart';
 
 void main() => runApp(MyApp());
 
@@ -31,15 +33,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var covidNationalData;
+  List<CovidDay> covidDailyCases = new List<CovidDay>();
 
   Future<String> _loadFromAsset() async {
     return await rootBundle.loadString("assets/covid_19_national.json");
   }
 
-  Future parseJson() async {
+  void parseJson() async {
     String jsonString = await _loadFromAsset();
-    covidNationalData = json.decode(jsonString);
+    List<dynamic> covidNationalData = json.decode(jsonString);
+
+    covidNationalData.forEach((element) {
+      covidDailyCases.add(CovidDay(
+        DateTime.parse(element['date']),
+        element['total'],
+        element['deaths'],
+      ));
+    });
+  }
+
+  @override
+  void initState() {
+    parseJson();
+    covidDailyCases.forEach((element) {
+      print(
+          "${DateFormat.yMMMd().format(element.date)} : ${element.totalCases}");
+    });
+    super.initState();
   }
 
   @override
@@ -51,13 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           Container(
-            child: ChartCard(),
-          ),
-          Center(
-            child: RaisedButton(
-              child: Text('Click me'),
-              onPressed: () => {parseJson()},
-            ),
+            child: ChartCard(covidDailyCases),
           ),
         ],
       ),
