@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'dart:async' show Future;
-import 'package:flutter/services.dart' show rootBundle;
+
 import 'package:intl/intl.dart';
 
+import 'utils.dart';
 import './widgets/chart_card.dart';
 import './models/covid_day.dart';
+import './models/covid_state.dart';
 
 void main() => runApp(MyApp());
 
@@ -34,14 +35,34 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<CovidDay> covidDailyCases = new List<CovidDay>();
-
-  Future<String> _loadFromAsset() async {
-    return await rootBundle.loadString("assets/covid_19_national.json");
-  }
+  Map<String, CovidState> covidStateData = new Map<String, CovidState>();
 
   void parseJson() async {
-    String jsonString = await _loadFromAsset();
-    List<dynamic> covidNationalData = json.decode(jsonString);
+    String covidData = await loadIndiaJson();
+    String stateData = await loadStateData();
+
+    List<dynamic> covidNationalData = json.decode(covidData);
+    List<dynamic> uniqueStateNames =
+        giveUniqueStateNames(json.decode(stateData)['data']);
+
+    print(uniqueStateNames);
+
+    uniqueStateNames.forEach((state) {
+      covidStateData[state] = CovidState();
+    });
+
+    (json.decode(stateData)['data'] as List).forEach((day) {
+      (day['regional'] as List).forEach((state) {
+        covidStateData[fixStateName(state['loc'])].stateName = state['loc'];
+        covidStateData[fixStateName(state['loc'])].dayWiseScenerio.add(
+              CovidDay(
+                DateTime.parse(day['date']),
+                state['totalConfirmed'],
+                state['deaths'],
+              ),
+            );
+      });
+    });
 
     covidNationalData.forEach((element) {
       setState(() {
@@ -70,11 +91,19 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
+      body: ListView(
         children: [
           Container(
             child: ChartCard(covidDailyCases),
           ),
+          Center(
+            child: RaisedButton(
+              child: Text("Hey Button's here!"),
+              onPressed: () {
+                print("Hey Hello How are you");
+              },
+            ),
+          )
         ],
       ),
     );
