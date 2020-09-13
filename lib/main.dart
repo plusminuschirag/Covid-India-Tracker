@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Chart App'),
+      home: MyHomePage(title: '🇮🇳  COVID-19 India App'),
     );
   }
 }
@@ -42,12 +42,17 @@ class _MyHomePageState extends State<MyHomePage> {
     //Cleaned Unique State Names : Each Name will have curve for itself
     uniqueStateNames = giveUniqueStateNames(json.decode(stateData)['data']);
 
-    //Initializing Map
+    //Inserting India at Top
+    uniqueStateNames.insert(0, "India");
+
+    //Initializing Map for Each uniqueStateNames otherwise Null Error
     uniqueStateNames.forEach((state) {
       covidStateData[state] = CovidState();
     });
 
-    //Filling Map with Data
+    print(json.decode(stateData)['data']);
+
+    //Filling Map with State Data
     (json.decode(stateData)['data'] as List).forEach((day) {
       (day['regional'] as List).forEach((state) {
         covidStateData[fixStateName(state['loc'])].stateName = state['loc'];
@@ -59,6 +64,17 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             );
       });
+    });
+
+    (json.decode(stateData)['data'] as List).forEach((day) {
+      covidStateData["India"].stateName = 'India';
+      covidStateData["India"].dayWiseScenerio.add(
+            CovidDay(
+              DateTime.parse(day['day']),
+              day['summary']['total'],
+              day['summary']['deaths'],
+            ),
+          );
     });
 
     covidStateData.forEach((key, value) {
