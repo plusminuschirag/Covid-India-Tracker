@@ -53,5 +53,3 @@ String fixStateName(String stateNameToFix) {
     return stateNameToFix;
   }
 }
-
-void stateWiseData(List<dynamic> covidStateData) {}

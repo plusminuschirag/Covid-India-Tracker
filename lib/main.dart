@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import 'package:intl/intl.dart';
-
 import 'utils.dart';
 import './widgets/chart_card.dart';
 import './models/covid_day.dart';
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Chart App'),
+      home: MyHomePage(title: '🇮🇳  COVID-19 India App'),
     );
   }
 }
@@ -34,24 +32,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<CovidDay> covidDailyCases = new List<CovidDay>();
   Map<String, CovidState> covidStateData = new Map<String, CovidState>();
+  Map<String, Widget> covidStateCharts = new Map<String, Widget>();
+  List<dynamic> uniqueStateNames;
 
   void parseJson() async {
-    String covidData = await loadIndiaJson();
     String stateData = await loadStateData();
 
-    List<dynamic> covidNationalData = json.decode(covidData);
     //Cleaned Unique State Names : Each Name will have curve for itself
-    List<dynamic> uniqueStateNames =
-        giveUniqueStateNames(json.decode(stateData)['data']);
+    uniqueStateNames = giveUniqueStateNames(json.decode(stateData)['data']);
 
-    //Initializing Map
+    //Inserting India at Top
+    uniqueStateNames.insert(0, "India");
+
+    //Initializing Map for Each uniqueStateNames otherwise Null Error
     uniqueStateNames.forEach((state) {
       covidStateData[state] = CovidState();
     });
 
-    //Filling Map with Data
+    print(json.decode(stateData)['data']);
+
+    //Filling Map with State Data
     (json.decode(stateData)['data'] as List).forEach((day) {
       (day['regional'] as List).forEach((state) {
         covidStateData[fixStateName(state['loc'])].stateName = state['loc'];
@@ -65,20 +66,21 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     });
 
-    covidStateData.forEach((key, value) {
-      print(key);
-      value.dayWiseScenerio.forEach((element) {
-        print(element.date);
-      });
+    (json.decode(stateData)['data'] as List).forEach((day) {
+      covidStateData["India"].stateName = 'India';
+      covidStateData["India"].dayWiseScenerio.add(
+            CovidDay(
+              DateTime.parse(day['day']),
+              day['summary']['total'],
+              day['summary']['deaths'],
+            ),
+          );
     });
 
-    covidNationalData.forEach((element) {
+    covidStateData.forEach((key, value) {
       setState(() {
-        covidDailyCases.add(CovidDay(
-          DateTime.parse(element['date']),
-          element['total'],
-          element['deaths'],
-        ));
+        covidStateCharts[key] = ChartCard(
+            covidStateData[key].stateName, covidStateData[key].dayWiseScenerio);
       });
     });
   }
@@ -86,10 +88,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     parseJson();
-    covidDailyCases.forEach((element) {
-      print(
-          "${DateFormat.yMMMd().format(element.date)} : ${element.totalCases}");
-    });
     super.initState();
   }
 
@@ -99,21 +97,11 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: ListView(
-        children: [
-          Container(
-            child: ChartCard(covidDailyCases),
-          ),
-          Center(
-            child: RaisedButton(
-              child: Text("Hey Button's here!"),
-              onPressed: () {
-                print("Hey Hello How are you");
-              },
-            ),
-          )
-        ],
-      ),
+      body: ListView.builder(
+          itemCount: uniqueStateNames.length,
+          itemBuilder: (BuildContext ctxt, int index) {
+            return covidStateCharts[uniqueStateNames[index]];
+          }),
     );
   }
 }
