@@ -65,7 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     covidStateData.forEach((key, value) {
       setState(() {
-        covidStateCharts[key] = ChartCard(covidStateData[key].dayWiseScenerio);
+        covidStateCharts[key] = ChartCard(
+            covidStateData[key].stateName, covidStateData[key].dayWiseScenerio);
       });
     });
   }

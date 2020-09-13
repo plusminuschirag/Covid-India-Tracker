@@ -5,9 +5,10 @@ import 'package:intl/intl.dart';
 import '../models/covid_day.dart';
 
 class ChartCard extends StatefulWidget {
+  final String stateName;
   final List<CovidDay> covidDayList;
 
-  ChartCard(this.covidDayList);
+  ChartCard(this.stateName, this.covidDayList);
 
   @override
   _ChartCardState createState() => _ChartCardState();
@@ -27,7 +28,7 @@ class _ChartCardState extends State<ChartCard> {
                 child: ListTile(
                   leading: Text("🇮🇳", style: TextStyle(fontSize: 30)),
                   title: Text(
-                    "COVID-19 India App",
+                    "COVID-19 India App \t ${widget.stateName}",
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
@@ -43,8 +44,8 @@ class _ChartCardState extends State<ChartCard> {
                 child: SafeArea(
                   child: SfCartesianChart(
                     margin: EdgeInsets.all(10),
-                    tooltipBehavior:
-                        TooltipBehavior(enable: true, header: "India"),
+                    tooltipBehavior: TooltipBehavior(
+                        enable: true, header: "${widget.stateName}"),
                     primaryXAxis: CategoryAxis(),
                     primaryYAxis: NumericAxis(),
                     series: <ChartSeries>[
