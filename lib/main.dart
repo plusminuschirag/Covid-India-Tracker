@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import 'package:intl/intl.dart';
-
 import 'utils.dart';
 import './widgets/chart_card.dart';
 import './models/covid_day.dart';
