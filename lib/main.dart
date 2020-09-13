@@ -42,25 +42,33 @@ class _MyHomePageState extends State<MyHomePage> {
     String stateData = await loadStateData();
 
     List<dynamic> covidNationalData = json.decode(covidData);
+    //Cleaned Unique State Names : Each Name will have curve for itself
     List<dynamic> uniqueStateNames =
         giveUniqueStateNames(json.decode(stateData)['data']);
 
-    print(uniqueStateNames);
-
+    //Initializing Map
     uniqueStateNames.forEach((state) {
       covidStateData[state] = CovidState();
     });
 
+    //Filling Map with Data
     (json.decode(stateData)['data'] as List).forEach((day) {
       (day['regional'] as List).forEach((state) {
         covidStateData[fixStateName(state['loc'])].stateName = state['loc'];
         covidStateData[fixStateName(state['loc'])].dayWiseScenerio.add(
               CovidDay(
-                DateTime.parse(day['date']),
+                DateTime.parse(day['day']),
                 state['totalConfirmed'],
                 state['deaths'],
               ),
             );
+      });
+    });
+
+    covidStateData.forEach((key, value) {
+      print(key);
+      value.dayWiseScenerio.forEach((element) {
+        print(element.date);
       });
     });
 

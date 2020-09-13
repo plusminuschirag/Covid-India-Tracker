@@ -4,7 +4,10 @@ class CovidState {
   String stateName;
   List<CovidDay> dayWiseScenerio;
 
-  CovidState();
+  CovidState() {
+    stateName = 'No Name';
+    dayWiseScenerio = [];
+  }
 
   CovidState.params(this.stateName, this.dayWiseScenerio);
 
