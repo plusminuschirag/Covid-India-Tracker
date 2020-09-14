@@ -13,11 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: '🇮🇳  COVID-19 India App'),
+      home: MyHomePage(title: '🇮🇳  COVID-19 Cases'),
     );
   }
 }
@@ -50,8 +51,6 @@ class _MyHomePageState extends State<MyHomePage> {
       covidStateData[state] = CovidState();
     });
 
-    print(json.decode(stateData)['data']);
-
     //Filling Map with State Data
     (json.decode(stateData)['data'] as List).forEach((day) {
       (day['regional'] as List).forEach((state) {
@@ -61,6 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 DateTime.parse(day['day']),
                 state['totalConfirmed'],
                 state['deaths'],
+                state['discharged'],
               ),
             );
       });
@@ -73,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
               DateTime.parse(day['day']),
               day['summary']['total'],
               day['summary']['deaths'],
+              day['summary']['discharged'],
             ),
           );
     });

@@ -25,9 +25,49 @@ class ChartCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 30,
                       )),
-                  title: Text(
-                    covidDayList.last.totalCases.toString(),
-                    style: TextStyle(fontSize: 20, color: Colors.red),
+                  title: Row(
+                    children: [
+                      Text(
+                        covidDayList.last.totalCases.toString(),
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Icon(
+                        Icons.arrow_upward,
+                        color: Colors.redAccent,
+                        size: 15,
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
+                      Text(
+                        covidDayList.last.totalDischarged.toString(),
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Icon(
+                        Icons.arrow_downward,
+                        color: Colors.greenAccent,
+                        size: 15,
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
+                      Text(
+                        covidDayList.last.totalDeaths.toString(),
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Icon(
+                        Icons.airline_seat_flat,
+                        color: Colors.grey,
+                        size: 15,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -41,18 +81,34 @@ class ChartCard extends StatelessWidget {
                 width: 350,
                 child: SafeArea(
                   child: SfCartesianChart(
+                    legend: Legend(
+                      isVisible: true,
+                    ),
                     margin: EdgeInsets.all(10),
                     tooltipBehavior:
-                        TooltipBehavior(enable: true, header: "${stateName}"),
+                        TooltipBehavior(enable: true, header: stateName),
                     primaryXAxis: CategoryAxis(),
                     primaryYAxis: NumericAxis(),
+                    palette: <Color>[
+                      Colors.red,
+                      Colors.teal,
+                    ],
                     series: <ChartSeries>[
                       LineSeries<CovidDay, String>(
+                        name: 'Cases',
                         dataSource: covidDayList,
                         xValueMapper: (CovidDay covidDay, _) =>
                             DateFormat.yMMMd().format(covidDay.date).toString(),
                         yValueMapper: (CovidDay covidDay, _) =>
                             covidDay.totalCases,
+                      ),
+                      LineSeries<CovidDay, String>(
+                        name: 'Discharged',
+                        dataSource: covidDayList,
+                        xValueMapper: (CovidDay covidDay, _) =>
+                            DateFormat.yMMMd().format(covidDay.date).toString(),
+                        yValueMapper: (CovidDay covidDay, _) =>
+                            covidDay.totalDischarged,
                       ),
                     ],
                   ),
