@@ -4,8 +4,15 @@
 
 * Case List Updated Daily.
 
+* 6+ month State History
+
 * Cases vs Discharged vs Deaths National & State Level Analysis
 
 * SyncFusion Charts
+
+* Width & Height Dyanmic
+
+* Overflow Resolved
+
 
 ![Covid Chart App](README_assets/flutter_covid_app.gif)
