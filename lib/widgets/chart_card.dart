@@ -23,51 +23,55 @@ class ChartCard extends StatelessWidget {
                 child: ListTile(
                   leading: Text(stateName,
                       style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
                       )),
-                  title: Row(
-                    children: [
-                      Text(
-                        covidDayList.last.totalCases.toString(),
-                        style: TextStyle(
+                  title: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(
+                      children: [
+                        Text(
+                          covidDayList.last.totalCases.toString(),
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Icon(
+                          Icons.arrow_upward,
+                          color: Colors.redAccent,
+                          size: 15,
+                        ),
+                        Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
+                        Text(
+                          covidDayList.last.totalDischarged.toString(),
+                          style: TextStyle(
                             fontSize: 15,
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Icon(
-                        Icons.arrow_upward,
-                        color: Colors.redAccent,
-                        size: 15,
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
-                      Text(
-                        covidDayList.last.totalDischarged.toString(),
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Icon(
-                        Icons.arrow_downward,
-                        color: Colors.greenAccent,
-                        size: 15,
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
-                      Text(
-                        covidDayList.last.totalDeaths.toString(),
-                        style: TextStyle(
-                          fontSize: 15,
+                        Icon(
+                          Icons.arrow_downward,
+                          color: Colors.greenAccent,
+                          size: 15,
+                        ),
+                        Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
+                        Text(
+                          covidDayList.last.totalDeaths.toString(),
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Icon(
+                          Icons.airline_seat_flat,
                           color: Colors.grey,
-                          fontWeight: FontWeight.bold,
+                          size: 15,
                         ),
-                      ),
-                      Icon(
-                        Icons.airline_seat_flat,
-                        color: Colors.grey,
-                        size: 15,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
