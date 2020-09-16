@@ -10,6 +10,139 @@ class ChartCard extends StatelessWidget {
 
   ChartCard(this.stateName, this.covidDayList);
 
+  createAlertDialog(
+      BuildContext context, String stateName, List<CovidDay> covidDayList) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Column(
+            children: [
+              Text(
+                stateName,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              FittedBox(
+                child: Row(
+                  children: [
+                    Text(
+                      'Date',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
+                    Text(
+                      'Cases',
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Icon(
+                      Icons.arrow_upward,
+                      color: Colors.redAccent,
+                      size: 15,
+                    ),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
+                    Text(
+                      'Discharged',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Icon(
+                      Icons.arrow_downward,
+                      color: Colors.greenAccent,
+                      size: 15,
+                    ),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
+                    Text(
+                      'Deaths',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Icon(
+                      Icons.airline_seat_flat,
+                      color: Colors.grey,
+                      size: 15,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height - 200,
+                width: MediaQuery.of(context).size.width - 100,
+                child: ListView.builder(
+                  itemCount: covidDayList.length,
+                  itemBuilder: (context, index) {
+                    return FittedBox(
+                      child: Row(
+                        children: [
+                          Container(
+                            width: (MediaQuery.of(context).size.width - 100) *
+                                0.25,
+                            child: Text(
+                              DateFormat.yMMMd()
+                                  .format(covidDayList[index].date)
+                                  .toString(),
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                          Text(
+                            covidDayList[index].totalCases.toString(),
+                            style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                          Text(
+                            covidDayList[index].totalDischarged.toString(),
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                          Text(
+                            covidDayList[index].totalDeaths.toString(),
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,51 +159,58 @@ class ChartCard extends StatelessWidget {
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       )),
-                  title: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Row(
-                      children: [
-                        Text(
-                          covidDayList.last.totalCases.toString(),
-                          style: TextStyle(
+                  title: GestureDetector(
+                    onTap: () {
+                      createAlertDialog(context, stateName, covidDayList);
+                    },
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Row(
+                        children: [
+                          Text(
+                            covidDayList.last.totalCases.toString(),
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Icon(
+                            Icons.arrow_upward,
+                            color: Colors.redAccent,
+                            size: 15,
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10)),
+                          Text(
+                            covidDayList.last.totalDischarged.toString(),
+                            style: TextStyle(
                               fontSize: 15,
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Icon(
-                          Icons.arrow_upward,
-                          color: Colors.redAccent,
-                          size: 15,
-                        ),
-                        Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
-                        Text(
-                          covidDayList.last.totalDischarged.toString(),
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.green,
-                            fontWeight: FontWeight.bold,
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.arrow_downward,
-                          color: Colors.greenAccent,
-                          size: 15,
-                        ),
-                        Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
-                        Text(
-                          covidDayList.last.totalDeaths.toString(),
-                          style: TextStyle(
-                            fontSize: 15,
+                          Icon(
+                            Icons.arrow_downward,
+                            color: Colors.greenAccent,
+                            size: 15,
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10)),
+                          Text(
+                            covidDayList.last.totalDeaths.toString(),
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Icon(
+                            Icons.airline_seat_flat,
                             color: Colors.grey,
-                            fontWeight: FontWeight.bold,
+                            size: 15,
                           ),
-                        ),
-                        Icon(
-                          Icons.airline_seat_flat,
-                          color: Colors.grey,
-                          size: 15,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

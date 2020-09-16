@@ -93,20 +93,21 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: FutureBuilder(
-          future: parseJson(),
-          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    return covidStateCharts[snapshot.data[index]];
-                  });
-            }
-          }),
+        future: parseJson(),
+        builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+          if (snapshot.data == null) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext ctxt, int index) {
+                  return covidStateCharts[snapshot.data[index]];
+                });
+          }
+        },
+      ),
     );
   }
 }
