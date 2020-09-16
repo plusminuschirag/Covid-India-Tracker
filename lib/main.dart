@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
           builder: (BuildContext ctx, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
               return Center(
-                child: Text("Loading"),
+                child: CircularProgressIndicator(),
               );
             } else {
               return ListView.builder(
