@@ -36,8 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Map<String, CovidState> covidStateData = new Map<String, CovidState>();
   Map<String, Widget> covidStateCharts = new Map<String, Widget>();
   List<dynamic> uniqueStateNames;
-
-  void parseJson() async {
+  Future<List<dynamic>> parseJson() async {
     String stateData = await loadStateData();
 
     //Cleaned Unique State Names : Each Name will have curve for itself
@@ -84,12 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
             covidStateData[key].stateName, covidStateData[key].dayWiseScenerio);
       });
     });
-  }
-
-  @override
-  void initState() {
-    parseJson();
-    super.initState();
+    return uniqueStateNames;
   }
 
   @override
@@ -98,10 +92,20 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: ListView.builder(
-          itemCount: uniqueStateNames.length,
-          itemBuilder: (BuildContext ctxt, int index) {
-            return covidStateCharts[uniqueStateNames[index]];
+      body: FutureBuilder(
+          future: parseJson(),
+          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return Center(
+                child: Text("Loading"),
+              );
+            } else {
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext ctxt, int index) {
+                    return covidStateCharts[snapshot.data[index]];
+                  });
+            }
           }),
     );
   }
