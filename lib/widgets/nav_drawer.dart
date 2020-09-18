@@ -13,44 +13,54 @@ class NavDrawerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: Colors.grey,
-          width: 2,
-        ),
-      ),
-      child: ListTile(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(child: Text(stateName, style: TextStyle(fontSize: 18))),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
-              ),
-              Flexible(
-                child: Text(
-                  stateData.dayWiseScenerio.last.totalCases != 0
-                      ? "${((stateData.dayWiseScenerio.last.totalDischarged / stateData.dayWiseScenerio.last.totalCases) * 100).toStringAsFixed(2)}%"
-                      : "No Cases",
-                  style: TextStyle(
-                    color: Colors.blue,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    StateScreen(stateName: stateName, stateData: stateData)));
+      },
+      child: Card(
+        elevation: 5,
+        child: Container(
+          width: double.infinity,
+          margin: EdgeInsets.all(5),
+          padding: EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: Colors.grey,
+              width: 2,
+            ),
+          ),
+          child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                    child: Text(stateName, style: TextStyle(fontSize: 18))),
+                Flexible(
+                  child: Text(
+                    stateData.dayWiseScenerio.last.totalCases != 0
+                        ? "${((stateData.dayWiseScenerio.last.totalDischarged / stateData.dayWiseScenerio.last.totalCases) * 100).toStringAsFixed(2)}%"
+                        : "No Cases",
+                    style: TextStyle(
+                        color: Colors.blue, fontWeight: FontWeight.bold),
                   ),
                 ),
-              ),
-              Flexible(
-                child: Text(stateData.dayWiseScenerio.last.totalCases != 0
-                    ? "${((stateData.dayWiseScenerio.last.totalDeaths / stateData.dayWiseScenerio.last.totalCases) * 100).toStringAsFixed(2)}%"
-                    : "No Deaths"),
-              ),
-            ],
-          ),
-          subtitle: Container(
-            alignment: FractionalOffset.center,
-            child: Row(
+                Flexible(
+                  child: Text(
+                    stateData.dayWiseScenerio.last.totalCases != 0
+                        ? "${((stateData.dayWiseScenerio.last.totalDeaths / stateData.dayWiseScenerio.last.totalCases) * 100).toStringAsFixed(2)}%"
+                        : "No Deaths",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+            Padding(padding: EdgeInsets.only(bottom: 5)),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
@@ -78,7 +88,7 @@ class NavDrawerTile extends StatelessWidget {
                 ),
                 Icon(
                   Icons.arrow_downward,
-                  color: Colors.greenAccent,
+                  color: Colors.green,
                   size: 15,
                 ),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
@@ -98,14 +108,9 @@ class NavDrawerTile extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => StateScreen(
-                        stateName: stateName, stateData: stateData)));
-          }),
+          ]),
+        ),
+      ),
     );
   }
 }
