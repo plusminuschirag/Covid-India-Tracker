@@ -13,10 +13,37 @@ class NavDrawerTile extends StatelessWidget {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: Colors.grey,
+          width: 2,
+        ),
+      ),
       child: ListTile(
-          title: Text(
-            stateName,
-            style: TextStyle(fontSize: 18),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(child: Text(stateName, style: TextStyle(fontSize: 18))),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+              ),
+              Flexible(
+                child: Text(
+                  stateData.dayWiseScenerio.last.totalCases != 0
+                      ? "${((stateData.dayWiseScenerio.last.totalDischarged / stateData.dayWiseScenerio.last.totalCases) * 100).toStringAsFixed(2)}%"
+                      : "No Cases",
+                  style: TextStyle(
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+              Flexible(
+                child: Text(stateData.dayWiseScenerio.last.totalCases != 0
+                    ? "${((stateData.dayWiseScenerio.last.totalDeaths / stateData.dayWiseScenerio.last.totalCases) * 100).toStringAsFixed(2)}%"
+                    : "No Deaths"),
+              ),
+            ],
           ),
           subtitle: Container(
             alignment: FractionalOffset.center,
