@@ -7,7 +7,7 @@ Map<String, String> problemStateNames = {
   'Jharkhand#': 'Jharkhand',
   'Nagaland#': 'Nagaland',
   'Madhya Pradesh#': 'Madhya Pradesh',
-  'Dadar Nagar Haveli': 'Dadar and Nagar Haveli and Daman and Diu'
+  'Dadar Nagar Haveli': 'Dadra and Nagar Haveli and Daman and Diu'
 };
 
 //Loads Hardcoded Indian Json

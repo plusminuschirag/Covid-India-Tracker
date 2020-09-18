@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:covid_chart_app/widgets/nav_drawer.dart';
 import 'package:flutter/material.dart';
 
 import 'utils.dart';
@@ -36,11 +37,16 @@ class _MyHomePageState extends State<MyHomePage> {
   Map<String, CovidState> covidStateData = new Map<String, CovidState>();
   Map<String, Widget> covidStateCharts = new Map<String, Widget>();
   List<dynamic> uniqueStateNames;
-  Future<List<dynamic>> parseJson() async {
+
+  Future<List<dynamic>> parseJson({bool stateDrawer = false}) async {
     String stateData = await loadStateData();
 
     //Cleaned Unique State Names : Each Name will have curve for itself
     uniqueStateNames = giveUniqueStateNames(json.decode(stateData)['data']);
+
+    if (stateDrawer == true) {
+      return uniqueStateNames.toSet().toList();
+    }
 
     //Inserting India at Top
     uniqueStateNames.insert(0, "India");
@@ -77,13 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
           );
     });
 
-    covidStateData.forEach((key, value) {
-      setState(() {
-        covidStateCharts[key] = ChartCard(
-            covidStateData[key].stateName, covidStateData[key].dayWiseScenerio);
-      });
-    });
-    return uniqueStateNames;
+    //Main Screen only shows national data, all states are now in the side drawer
+    return uniqueStateNames = ['India'];
   }
 
   @override
@@ -91,6 +92,28 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+      ),
+      drawer: Drawer(
+        child: FutureBuilder(
+          //State drawer : Shows states data
+          future: parseJson(stateDrawer: true),
+          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext ctxt, int index) {
+                    return NavDrawerTile(
+                      stateName: snapshot.data[index],
+                      stateData: covidStateData[snapshot.data[index]],
+                    );
+                  });
+            }
+          },
+        ),
       ),
       body: FutureBuilder(
         future: parseJson(),
@@ -103,7 +126,8 @@ class _MyHomePageState extends State<MyHomePage> {
             return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext ctxt, int index) {
-                  return covidStateCharts[snapshot.data[index]];
+                  return ChartCard(snapshot.data[index],
+                      covidStateData[snapshot.data[index]].dayWiseScenerio);
                 });
           }
         },

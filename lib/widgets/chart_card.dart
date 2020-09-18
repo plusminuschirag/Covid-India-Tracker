@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 
 import '../models/covid_day.dart';
 
+var indianNumberFormat = NumberFormat.compact(locale: 'en_IN');
+
 class ChartCard extends StatelessWidget {
   final String stateName;
   final List<CovidDay> covidDayList;
@@ -106,7 +108,8 @@ class ChartCard extends StatelessWidget {
                           ),
                           Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                           Text(
-                            covidDayList[index].totalCases.toString(),
+                            indianNumberFormat
+                                .format(covidDayList[index].totalCases),
                             style: TextStyle(
                                 fontSize: 10,
                                 color: Colors.red,
@@ -114,7 +117,8 @@ class ChartCard extends StatelessWidget {
                           ),
                           Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                           Text(
-                            covidDayList[index].totalDischarged.toString(),
+                            indianNumberFormat
+                                .format(covidDayList[index].totalDischarged),
                             style: TextStyle(
                               fontSize: 10,
                               color: Colors.green,
@@ -123,7 +127,8 @@ class ChartCard extends StatelessWidget {
                           ),
                           Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                           Text(
-                            covidDayList[index].totalDeaths.toString(),
+                            indianNumberFormat
+                                .format(covidDayList[index].totalDeaths),
                             style: TextStyle(
                               fontSize: 10,
                               color: Colors.grey,
@@ -168,23 +173,25 @@ class ChartCard extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            covidDayList.last.totalCases.toString(),
+                            indianNumberFormat
+                                .format(covidDayList.last.totalCases),
                             style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 20,
                                 color: Colors.red,
                                 fontWeight: FontWeight.bold),
                           ),
                           Icon(
                             Icons.arrow_upward,
                             color: Colors.redAccent,
-                            size: 15,
+                            size: 20,
                           ),
                           Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10)),
                           Text(
-                            covidDayList.last.totalDischarged.toString(),
+                            indianNumberFormat
+                                .format(covidDayList.last.totalDischarged),
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20,
                               color: Colors.green,
                               fontWeight: FontWeight.bold,
                             ),
@@ -192,14 +199,15 @@ class ChartCard extends StatelessWidget {
                           Icon(
                             Icons.arrow_downward,
                             color: Colors.greenAccent,
-                            size: 15,
+                            size: 20,
                           ),
                           Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10)),
                           Text(
-                            covidDayList.last.totalDeaths.toString(),
+                            indianNumberFormat
+                                .format(covidDayList.last.totalDeaths),
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20,
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
                             ),
