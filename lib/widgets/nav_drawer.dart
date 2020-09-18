@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../screen/state_screen.dart';
 import '../models/covid_state.dart';
+import 'package:intl/intl.dart';
+
+var indianNumberFormat = NumberFormat.compact(locale: 'en_IN');
 
 class NavDrawerTile extends StatelessWidget {
   final String stateName;
@@ -51,7 +54,8 @@ class NavDrawerTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  stateData.dayWiseScenerio.last.totalCases.toString(),
+                  indianNumberFormat
+                      .format(stateData.dayWiseScenerio.last.totalCases),
                   style: TextStyle(
                       fontSize: 15,
                       color: Colors.red,
@@ -64,7 +68,8 @@ class NavDrawerTile extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
                 Text(
-                  stateData.dayWiseScenerio.last.totalDischarged.toString(),
+                  indianNumberFormat
+                      .format(stateData.dayWiseScenerio.last.totalDischarged),
                   style: TextStyle(
                     fontSize: 15,
                     color: Colors.green,
@@ -78,7 +83,8 @@ class NavDrawerTile extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
                 Text(
-                  stateData.dayWiseScenerio.last.totalDeaths.toString(),
+                  indianNumberFormat
+                      .format(stateData.dayWiseScenerio.last.totalDeaths),
                   style: TextStyle(
                     fontSize: 15,
                     color: Colors.grey,
