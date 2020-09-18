@@ -176,14 +176,14 @@ class ChartCard extends StatelessWidget {
                             indianNumberFormat
                                 .format(covidDayList.last.totalCases),
                             style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 20,
                                 color: Colors.red,
                                 fontWeight: FontWeight.bold),
                           ),
                           Icon(
                             Icons.arrow_upward,
                             color: Colors.redAccent,
-                            size: 15,
+                            size: 20,
                           ),
                           Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10)),
@@ -191,7 +191,7 @@ class ChartCard extends StatelessWidget {
                             indianNumberFormat
                                 .format(covidDayList.last.totalDischarged),
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20,
                               color: Colors.green,
                               fontWeight: FontWeight.bold,
                             ),
@@ -199,7 +199,7 @@ class ChartCard extends StatelessWidget {
                           Icon(
                             Icons.arrow_downward,
                             color: Colors.greenAccent,
-                            size: 15,
+                            size: 20,
                           ),
                           Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10)),
@@ -207,7 +207,7 @@ class ChartCard extends StatelessWidget {
                             indianNumberFormat
                                 .format(covidDayList.last.totalDeaths),
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20,
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
                             ),
