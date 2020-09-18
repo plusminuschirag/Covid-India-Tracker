@@ -40,7 +40,9 @@ class NavDrawerTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                    child: Text(stateName, style: TextStyle(fontSize: 18))),
+                    child: Text(stateName,
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold))),
                 Flexible(
                   child: Text(
                     stateData.dayWiseScenerio.last.totalCases != 0
