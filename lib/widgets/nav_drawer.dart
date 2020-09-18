@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 import '../screen/state_screen.dart';
 import '../models/covid_state.dart';
-import 'package:intl/intl.dart';
 
 var indianNumberFormat = NumberFormat.compact(locale: 'en_IN');
 
