@@ -10,9 +10,7 @@
 
 * SyncFusion Charts
 
-* Width & Height Dyanmic
-
-* Overflow Resolved
+* Dynamic Widgets
 
 
 ![Covid Chart App](README_assets/flutter_covid_app.gif)
