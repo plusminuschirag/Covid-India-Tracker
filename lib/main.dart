@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:covid_chart_app/widgets/nav_drawer.dart';
 import 'package:flutter/material.dart';
 
 import 'utils.dart';
@@ -36,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Map<String, CovidState> covidStateData = new Map<String, CovidState>();
   Map<String, Widget> covidStateCharts = new Map<String, Widget>();
   List<dynamic> uniqueStateNames;
-  Future<List<dynamic>> parseJson() async {
+  Future<List<dynamic>> parseJson({bool onlyStates = false}) async {
     String stateData = await loadStateData();
 
     //Cleaned Unique State Names : Each Name will have curve for itself
@@ -44,6 +45,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //Inserting India at Top
     uniqueStateNames.insert(0, "India");
+
+    if (onlyStates == true) {
+      return uniqueStateNames.toSet().toList();
+    }
 
     //Initializing Map for Each uniqueStateNames otherwise Null Error
     uniqueStateNames.forEach((state) {
@@ -91,6 +96,24 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+      ),
+      drawer: Drawer(
+        child: FutureBuilder(
+          future: parseJson(onlyStates: true),
+          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext ctxt, int index) {
+                    return NavDrawerTile(snapshot.data[index]);
+                  });
+            }
+          },
+        ),
       ),
       body: FutureBuilder(
         future: parseJson(),
