@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
+import 'dart:math';
 
 import '../models/covid_day.dart';
 
 var indianNumberFormat = NumberFormat.compact(locale: 'en_IN');
 
-class DailyTotalCases extends StatelessWidget {
+class DailyLogTotalCases extends StatelessWidget {
   final String stateName;
   final List<CovidDay> covidDayList;
 
-  DailyTotalCases(this.stateName, this.covidDayList);
+  DailyLogTotalCases(this.stateName, this.covidDayList);
 
   createAlertDialog(
       BuildContext context, String stateName, List<CovidDay> covidDayList) {
@@ -228,9 +229,7 @@ class DailyTotalCases extends StatelessWidget {
                       enablePinching: true,
                     ),
                     legend: Legend(
-                      isVisible: true,
-                      position: LegendPosition.bottom,
-                    ),
+                        isVisible: true, position: LegendPosition.bottom),
                     margin: EdgeInsets.all(10),
                     tooltipBehavior:
                         TooltipBehavior(enable: true, header: stateName),
@@ -247,7 +246,9 @@ class DailyTotalCases extends StatelessWidget {
                         xValueMapper: (CovidDay covidDay, _) =>
                             DateFormat.yMMMd().format(covidDay.date).toString(),
                         yValueMapper: (CovidDay covidDay, _) =>
-                            covidDay.totalCases,
+                            covidDay.totalCases == 0
+                                ? 0
+                                : log(covidDay.totalCases),
                       ),
                       LineSeries<CovidDay, String>(
                         name: 'Discharged',
@@ -255,7 +256,9 @@ class DailyTotalCases extends StatelessWidget {
                         xValueMapper: (CovidDay covidDay, _) =>
                             DateFormat.yMMMd().format(covidDay.date).toString(),
                         yValueMapper: (CovidDay covidDay, _) =>
-                            covidDay.totalDischarged,
+                            covidDay.totalDischarged == 0
+                                ? 0
+                                : log(covidDay.totalDischarged),
                       ),
                     ],
                   ),

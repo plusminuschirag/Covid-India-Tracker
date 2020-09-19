@@ -254,6 +254,7 @@ class DailyNewCases extends StatelessWidget {
                       ),
                       legend: Legend(
                         isVisible: true,
+                        position: LegendPosition.bottom,
                       ),
                       margin: EdgeInsets.all(10),
                       tooltipBehavior:
