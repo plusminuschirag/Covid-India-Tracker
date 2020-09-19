@@ -224,6 +224,9 @@ class DailyTotalCases extends StatelessWidget {
                 width: 350,
                 child: SafeArea(
                   child: SfCartesianChart(
+                    zoomPanBehavior: ZoomPanBehavior(
+                      enablePinching: true,
+                    ),
                     legend: Legend(
                       isVisible: true,
                     ),

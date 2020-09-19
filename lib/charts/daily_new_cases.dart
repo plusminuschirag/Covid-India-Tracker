@@ -34,6 +34,7 @@ class DailyNewCases extends StatelessWidget {
     return DailyNewCases(stateName, covidDayList, covidPerDayList);
   }
 
+  //Alert Dialog Widget
   createAlertDialog(
       BuildContext context, String stateName, List<CovidDay> covidPerDayList) {
     return showDialog(
@@ -248,6 +249,9 @@ class DailyNewCases extends StatelessWidget {
                   width: 350,
                   child: SafeArea(
                     child: SfCartesianChart(
+                      zoomPanBehavior: ZoomPanBehavior(
+                        enablePinching: true,
+                      ),
                       legend: Legend(
                         isVisible: true,
                       ),
