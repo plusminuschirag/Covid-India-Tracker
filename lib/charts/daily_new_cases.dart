@@ -19,15 +19,23 @@ class DailyNewCases extends StatelessWidget {
     List<CovidDay> covidPerDayList = new List<CovidDay>();
     List<CovidDay> covidDayShifted = new List.from(covidDayList);
 
-    covidDayShifted.insert(0, CovidDay(covidDayShifted[0].date, 0, 0, 0));
+    covidDayShifted.insert(
+        0,
+        CovidDay(
+            date: covidDayShifted[0].date,
+            totalCases: 0,
+            totalDeaths: 0,
+            totalDischarged: 0));
 
     for (var idx = 0; idx < covidDayList.length; idx++) {
       covidPerDayList.add(CovidDay(
-        covidDayList[idx].date,
-        covidDayList[idx].totalCases - covidDayShifted[idx].totalCases,
-        covidDayList[idx].totalDischarged -
+        date: covidDayList[idx].date,
+        totalCases:
+            covidDayList[idx].totalCases - covidDayShifted[idx].totalCases,
+        totalDeaths:
+            covidDayList[idx].totalDeaths - covidDayShifted[idx].totalDeaths,
+        totalDischarged: covidDayList[idx].totalDischarged -
             covidDayShifted[idx].totalDischarged,
-        covidDayList[idx].totalDeaths - covidDayShifted[idx].totalDeaths,
       ));
     }
 

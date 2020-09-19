@@ -63,10 +63,10 @@ class _MyHomePageState extends State<MyHomePage> {
         covidStateData[fixStateName(state['loc'])].stateName = state['loc'];
         covidStateData[fixStateName(state['loc'])].dayWiseScenerio.add(
               CovidDay(
-                DateTime.parse(day['day']),
-                state['totalConfirmed'],
-                state['deaths'],
-                state['discharged'],
+                date: DateTime.parse(day['day']),
+                totalCases: state['totalConfirmed'],
+                totalDeaths: state['deaths'],
+                totalDischarged: state['discharged'],
               ),
             );
       });
@@ -76,10 +76,10 @@ class _MyHomePageState extends State<MyHomePage> {
       covidStateData["India"].stateName = 'India';
       covidStateData["India"].dayWiseScenerio.add(
             CovidDay(
-              DateTime.parse(day['day']),
-              day['summary']['total'],
-              day['summary']['deaths'],
-              day['summary']['discharged'],
+              date: DateTime.parse(day['day']),
+              totalCases: day['summary']['total'],
+              totalDeaths: day['summary']['deaths'],
+              totalDischarged: day['summary']['discharged'],
             ),
           );
     });
