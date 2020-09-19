@@ -18,7 +18,7 @@ class ChartState extends StatelessWidget {
         children: [
           DailyTotalCases(stateName, covidDayList),
           DailyNewCases.generateDay(stateName, covidDayList),
-          DailyLogTotalCases(stateName, covidDayList),
+          //DailyLogTotalCases(stateName, covidDayList),
         ],
       ),
     );
