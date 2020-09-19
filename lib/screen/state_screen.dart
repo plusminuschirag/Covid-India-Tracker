@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/covid_state.dart';
-import '../widgets/chart_card.dart';
+import '../widgets/chart_state.dart';
 
 class StateScreen extends StatelessWidget {
   final String stateName;
@@ -15,6 +15,8 @@ class StateScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(this.stateName),
         ),
-        body: ChartCard(stateName, stateData.dayWiseScenerio));
+        body: ListView(
+          children: [ChartState(stateName, stateData.dayWiseScenerio)],
+        ));
   }
 }
