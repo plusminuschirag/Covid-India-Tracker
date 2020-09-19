@@ -155,75 +155,66 @@ class DailyTotalCases extends StatelessWidget {
       elevation: 10,
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: ListTile(
-                  leading: Text(stateName,
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      )),
-                  title: GestureDetector(
-                    onTap: () {
-                      createAlertDialog(context, stateName, covidDayList);
-                    },
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Row(
-                        children: [
-                          Text(
-                            indianNumberFormat
-                                .format(covidDayList.last.totalCases),
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.red,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Icon(
-                            Icons.arrow_upward,
-                            color: Colors.redAccent,
-                            size: 20,
-                          ),
-                          Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10)),
-                          Text(
-                            indianNumberFormat
-                                .format(covidDayList.last.totalDischarged),
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.green,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_downward,
-                            color: Colors.greenAccent,
-                            size: 20,
-                          ),
-                          Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10)),
-                          Text(
-                            indianNumberFormat
-                                .format(covidDayList.last.totalDeaths),
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Icon(
-                            Icons.airline_seat_flat,
-                            color: Colors.grey,
-                            size: 15,
-                          ),
-                        ],
-                      ),
+          GestureDetector(
+            onTap: () {
+              createAlertDialog(context, stateName, covidDayList);
+            },
+            child: Container(
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.only(top: 10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(stateName,
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ),
+                  Text(
+                    indianNumberFormat.format(covidDayList.last.totalCases),
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Icon(
+                    Icons.arrow_upward,
+                    color: Colors.redAccent,
+                    size: 20,
+                  ),
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
+                  Text(
+                    indianNumberFormat
+                        .format(covidDayList.last.totalDischarged),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
+                  Icon(
+                    Icons.arrow_downward,
+                    color: Colors.greenAccent,
+                    size: 20,
+                  ),
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
+                  Text(
+                    indianNumberFormat.format(covidDayList.last.totalDeaths),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Icon(
+                    Icons.airline_seat_flat,
+                    color: Colors.grey,
+                    size: 15,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
           Card(
             margin: EdgeInsets.all(20),
