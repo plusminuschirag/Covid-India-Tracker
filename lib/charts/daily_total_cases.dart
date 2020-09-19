@@ -6,11 +6,11 @@ import '../models/covid_day.dart';
 
 var indianNumberFormat = NumberFormat.compact(locale: 'en_IN');
 
-class ChartCard extends StatelessWidget {
+class DailyTotalCases extends StatelessWidget {
   final String stateName;
   final List<CovidDay> covidDayList;
 
-  ChartCard(this.stateName, this.covidDayList);
+  DailyTotalCases(this.stateName, this.covidDayList);
 
   createAlertDialog(
       BuildContext context, String stateName, List<CovidDay> covidDayList) {

@@ -4,9 +4,10 @@ import 'package:covid_chart_app/widgets/nav_drawer.dart';
 import 'package:flutter/material.dart';
 
 import 'utils.dart';
-import './widgets/chart_card.dart';
 import './models/covid_day.dart';
 import './models/covid_state.dart';
+
+import './widgets/chart_state.dart';
 
 void main() => runApp(MyApp());
 
@@ -126,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext ctxt, int index) {
-                  return ChartCard(snapshot.data[index],
+                  return ChartState(snapshot.data[index],
                       covidStateData[snapshot.data[index]].dayWiseScenerio);
                 });
           }
