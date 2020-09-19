@@ -7,6 +7,7 @@ class CovidDay {
   CovidDay(
       {this.date, this.totalCases, this.totalDeaths, this.totalDischarged});
 
+  // Operator overloading
   CovidDay operator -(CovidDay previousDay) => CovidDay(
         date: date,
         totalCases: totalCases - previousDay.totalCases,

@@ -28,15 +28,7 @@ class DailyNewCases extends StatelessWidget {
             totalDischarged: 0));
 
     for (var idx = 0; idx < covidDayList.length; idx++) {
-      covidPerDayList.add(CovidDay(
-        date: covidDayList[idx].date,
-        totalCases:
-            covidDayList[idx].totalCases - covidDayShifted[idx].totalCases,
-        totalDeaths:
-            covidDayList[idx].totalDeaths - covidDayShifted[idx].totalDeaths,
-        totalDischarged: covidDayList[idx].totalDischarged -
-            covidDayShifted[idx].totalDischarged,
-      ));
+      covidPerDayList.add(covidDayList[idx] - covidDayShifted[idx]);
     }
 
     return DailyNewCases(stateName, covidDayList, covidPerDayList);
@@ -178,6 +170,7 @@ class DailyNewCases extends StatelessWidget {
     );
   }
 
+  //GRAPH WIDGET
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -189,7 +182,7 @@ class DailyNewCases extends StatelessWidget {
             children: [
               Expanded(
                 child: ListTile(
-                  leading: Text("New : $stateName",
+                  leading: Text("New Cases",
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
