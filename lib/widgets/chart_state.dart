@@ -1,3 +1,4 @@
+import 'package:covid_chart_app/charts/daily_log_cases.dart';
 import 'package:flutter/material.dart';
 import '../charts/daily_new_cases.dart';
 import '../charts/daily_total_cases.dart';
@@ -17,6 +18,7 @@ class ChartState extends StatelessWidget {
         children: [
           DailyTotalCases(stateName, covidDayList),
           DailyNewCases.generateDay(stateName, covidDayList),
+          //DailyLogTotalCases(stateName, covidDayList),
         ],
       ),
     );
