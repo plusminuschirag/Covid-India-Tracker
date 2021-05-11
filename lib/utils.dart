@@ -7,7 +7,11 @@ Map<String, String> problemStateNames = {
   'Jharkhand#': 'Jharkhand',
   'Nagaland#': 'Nagaland',
   'Madhya Pradesh#': 'Madhya Pradesh',
-  'Dadar Nagar Haveli': 'Dadra and Nagar Haveli and Daman and Diu'
+  'Dadar Nagar Haveli': 'Dadra and Nagar Haveli and Daman and Diu',
+  'Uttarakhand***': 'Uttarakhand',
+  'Maharashtra***': 'Maharashtra',
+  'Chandigarh***': 'Chandigarh',
+  'Punjab***': 'Punjab'
 };
 
 //Loads Hardcoded Indian Json
@@ -34,7 +38,7 @@ List<String> giveUniqueStateNames(List<dynamic> covidStateData) {
     });
   });
 
-  List<String> newStateNames = new List();
+  List<String> newStateNames = [];
 
   stateNames.toList().forEach((state) {
     if (problemStateNames.containsKey(state)) {

@@ -16,7 +16,7 @@ class DailyNewCases extends StatelessWidget {
 
   factory DailyNewCases.generateDay(
       String stateName, List<CovidDay> covidDayList) {
-    List<CovidDay> covidPerDayList = new List<CovidDay>();
+    List<CovidDay> covidPerDayList = [];
     List<CovidDay> covidDayShifted = new List.from(covidDayList);
 
     covidDayShifted.insert(
