@@ -31,6 +31,8 @@ class DailyNewCases extends StatelessWidget {
       covidPerDayList.add(covidDayList[idx] - covidDayShifted[idx]);
     }
 
+    covidPerDayList.removeLast();
+
     return DailyNewCases(stateName, covidDayList, covidPerDayList);
   }
 
@@ -179,6 +181,15 @@ class DailyNewCases extends StatelessWidget {
         elevation: 10,
         child: Column(
           children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+            ),
+            Text(
+                "${DateFormat.yMMMd().format(covidPerDayList.last.date).toString()}",
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                )),
             GestureDetector(
               onTap: () {
                 createAlertDialog(context, stateName, covidPerDayList);
@@ -189,7 +200,7 @@ class DailyNewCases extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                        child: Text("New Cases",
+                        child: Text("Daily New Cases",
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
