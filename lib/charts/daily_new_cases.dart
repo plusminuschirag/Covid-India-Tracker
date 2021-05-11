@@ -275,6 +275,7 @@ class DailyNewCases extends StatelessWidget {
                       palette: <Color>[
                         Colors.red,
                         Colors.teal,
+                        Colors.black,
                       ],
                       series: <ChartSeries>[
                         LineSeries<CovidDay, String>(
@@ -296,6 +297,16 @@ class DailyNewCases extends StatelessWidget {
                                   .toString(),
                           yValueMapper: (CovidDay covidDay, _) =>
                               covidDay.totalDischarged,
+                        ),
+                        LineSeries<CovidDay, String>(
+                          name: 'Deaths',
+                          dataSource: covidPerDayList,
+                          xValueMapper: (CovidDay covidDay, _) =>
+                              DateFormat.yMMMd()
+                                  .format(covidDay.date)
+                                  .toString(),
+                          yValueMapper: (CovidDay covidDay, _) =>
+                              covidDay.totalDeaths,
                         ),
                       ],
                     ),

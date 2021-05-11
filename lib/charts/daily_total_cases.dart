@@ -165,7 +165,7 @@ class DailyTotalCases extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(stateName,
+                    child: Text("$stateName(Total)",
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -236,10 +236,7 @@ class DailyTotalCases extends StatelessWidget {
                         TooltipBehavior(enable: true, header: stateName),
                     primaryXAxis: CategoryAxis(),
                     primaryYAxis: NumericAxis(),
-                    palette: <Color>[
-                      Colors.red,
-                      Colors.teal,
-                    ],
+                    palette: <Color>[Colors.red, Colors.teal, Colors.black],
                     series: <ChartSeries>[
                       LineSeries<CovidDay, String>(
                         name: 'Cases',
@@ -256,6 +253,14 @@ class DailyTotalCases extends StatelessWidget {
                             DateFormat.yMMMd().format(covidDay.date).toString(),
                         yValueMapper: (CovidDay covidDay, _) =>
                             covidDay.totalDischarged,
+                      ),
+                      LineSeries<CovidDay, String>(
+                        name: 'Deaths',
+                        dataSource: covidDayList,
+                        xValueMapper: (CovidDay covidDay, _) =>
+                            DateFormat.yMMMd().format(covidDay.date).toString(),
+                        yValueMapper: (CovidDay covidDay, _) =>
+                            covidDay.totalDeaths,
                       ),
                     ],
                   ),
